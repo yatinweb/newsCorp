@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      EPL PIMS
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,12 +9,29 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">EPL PIMS</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-list>
+    <ion-list-header>
+      <ion-label class="league-header-text">Select a League</ion-label>
+    </ion-list-header>
+    <ion-radio-group (ionChange)="handleChange($event)">
+      <ion-item *ngFor="let league of leagueList;" lines="full">
+        <ion-thumbnail slot="start">
+          <img class="league-imag" [alt]="league.name" [src]="league.logoUrl" />
+        </ion-thumbnail>
+        <ion-radio [value]="league">{{ league.name }}</ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
 </ion-content>
+
+<ion-footer collapse="fade">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button fill="solid" color="secondary">Next</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
