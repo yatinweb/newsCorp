@@ -1,4 +1,4 @@
-import { NgForOf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { 
   IonHeader,
@@ -23,6 +23,11 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonCardContent,
+  IonModal,
+  IonCardSubtitle,
+  IonBadge,
+  IonItemDivider,
+  IonItemGroup,
  } from '@ionic/angular/standalone';
 
 export interface ILeagueList {
@@ -33,6 +38,12 @@ export interface ILeagueList {
 }
 
 export interface ITeamList {
+  id: number;
+  name: string;
+  logoUrl: string;
+}
+
+export interface IPlayerList {
   id: number;
   name: string;
   logoUrl: string;
@@ -66,7 +77,13 @@ export interface ITeamList {
     IonCardHeader,
     IonCardTitle,
     IonCardContent,
-    NgForOf
+    NgForOf,
+    NgIf,
+    IonModal,
+    IonCardSubtitle,
+    IonBadge,
+    IonItemDivider,
+    IonItemGroup,
   ],
 })
 export class HomePage {
@@ -95,32 +112,87 @@ export class HomePage {
     {
       id: 1,
       name: 'Manchester United',
-      logoUrl: 'https://picsum.photos/100/100/?blur=2&random=1',
+      logoUrl: 'https://picsum.photos/100/100/?blur=2&random=4',
     },
     {
       id: 2,
       name: 'Arsenal',
-      logoUrl: 'https://picsum.photos/100/100/?blur=2&random=2',
+      logoUrl: 'https://picsum.photos/100/100/?blur=2&random=5',
     },
     {
       id: 3,
       name: 'Liverpool',
-      logoUrl: 'https://picsum.photos/100/100/?blur=2&random=3',
+      logoUrl: 'https://picsum.photos/100/100/?blur=2&random=6',
     },
     {
-      id: 5,
+      id: 4,
       name: 'Chelsea',
-      logoUrl: 'https://picsum.photos/100/100/?blur=2&random=3',
+      logoUrl: 'https://picsum.photos/100/100/?blur=2&random=7',
     },
     {
       id: 5,
       name: 'Westham United',
-      logoUrl: 'https://picsum.photos/100/100/?blur=2&random=3',
+      logoUrl: 'https://picsum.photos/100/100/?blur=2&random=8',
+    },
+  ];
+
+  playerList: IPlayerList[] = [
+    {
+      id: 1,
+      name: 'Marcus Rashford',
+      logoUrl: 'https://picsum.photos/100/100/?blur=2&random=11',
+    },
+    {
+      id: 2,
+      name: 'Anthony',
+      logoUrl: 'https://picsum.photos/100/100/?blur=2&random=12',
+    },
+    {
+      id: 3,
+      name: 'Amed',
+      logoUrl: 'https://picsum.photos/100/100/?blur=2&random=13',
+    },
+    {
+      id: 4,
+      name: 'Diogo',
+      logoUrl: 'https://picsum.photos/100/100/?blur=2&random=14',
+    },
+    {
+      id: 5,
+      name: 'Leny',
+      logoUrl: 'https://picsum.photos/100/100/?blur=2&random=15',
+    },
+    {
+      id: 6,
+      name: 'William',
+      logoUrl: 'https://picsum.photos/100/100/?blur=2&random=16',
+    },
+    {
+      id: 7,
+      name: 'Thomas',
+      logoUrl: 'https://picsum.photos/100/100/?blur=2&random=17',
+    },
+    {
+      id: 8,
+      name: 'Saka',
+      logoUrl: 'https://picsum.photos/100/100/?blur=2&random=18',
+    },
+    {
+      id: 9,
+      name: 'Martin',
+      logoUrl: 'https://picsum.photos/100/100/?blur=2&random=19',
+    },
+    {
+      id: 10,
+      name: 'Fabio',
+      logoUrl: 'https://picsum.photos/100/100/?blur=2&random=110',
     },
   ];
 
   selectedLeague: ILeagueList | undefined;
   selectedTeamList: ITeamList[] = [];
+  selectedPlayerList: IPlayerList[] = [];
+  isModalOpen = false;
 
   constructor() { }
 
@@ -137,9 +209,23 @@ export class HomePage {
     }
   }
 
+  onPlayerChange(player: IPlayerList): void {
+    if (this.selectedPlayerList.includes(player)) {
+      this.selectedPlayerList = this.selectedPlayerList.filter((value) => value != player);
+    } else {
+      this.selectedPlayerList.push(player);
+    }
+  }
+
   serach(): void {
     console.log(this.selectedLeague);
     console.log(this.selectedTeamList);
+    console.log(this.selectedPlayerList);
+    this.setResultOpen(true);
+  }
+
+  setResultOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
   }
 
 }

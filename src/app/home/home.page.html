@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="secondary">
     <ion-title>
       EPL PIMS
     </ion-title>
@@ -18,7 +18,7 @@
       <ion-col>
         <ion-card>
           <ion-card-header>
-            <ion-card-title>Select a League</ion-card-title>
+            <ion-card-title color="secondary">Select a League</ion-card-title>
           </ion-card-header>
           <ion-card-content>
             <ion-radio-group (ionChange)="handleLeagueChange($event)">
@@ -31,12 +31,12 @@
             </ion-radio-group>
           </ion-card-content>
         </ion-card>
-
       </ion-col>
-      <ion-col>
+
+      <ion-col *ngIf="selectedLeague">
         <ion-card>
           <ion-card-header>
-            <ion-card-title>Select a Team</ion-card-title>
+            <ion-card-title color="secondary">Select a Team</ion-card-title>
           </ion-card-header>
           <ion-card-content>
             <ion-item *ngFor="let team of teamList;">
@@ -49,15 +49,219 @@
           </ion-card-content>
         </ion-card>
       </ion-col>
+
+      <ion-col *ngIf="selectedLeague && selectedTeamList.length > 0">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title color="secondary">Select a Player</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-item *ngFor="let player of playerList;">
+              <ion-thumbnail slot="start">
+                <img class="player-img" [alt]="player.name" [src]="player.logoUrl" />
+              </ion-thumbnail>
+              <ion-checkbox color="secondary" value="player" (click)="onPlayerChange(player)" name="player">{{
+                player.name
+                }}</ion-checkbox>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
     </ion-row>
   </ion-grid>
+
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar color="secondary">
+          <ion-title>Player Summary</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setResultOpen(false)">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-card>
+          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+          <ion-card-header>
+            <ion-card-title>Erling Haaland</ion-card-title>
+            <ion-card-subtitle>Manchester City</ion-card-subtitle>
+          </ion-card-header>
+
+          <ion-card-content>
+            <ion-list>
+
+              <ion-item-group>
+                <ion-item-divider>
+                  <ion-label>Player Summary</ion-label>
+                </ion-item-divider>
+                <ion-item>
+                  <ion-label>
+                    Erling Haaland's poor performance in the Premier League match against Arsenal is criticized by Roy
+                    Keane. Manchester City and Liverpool's upcoming Premier League match is seen as crucial in the title
+                    race, with a historical dominance of City over Liverpool at Anfield. Both Manchester City and
+                    Liverpool are facing injury concerns ahead of their important match.
+                  </ion-label>
+                </ion-item>
+              </ion-item-group>
+
+              <ion-item-group>
+                <ion-item-divider>
+                  <ion-label>Injured</ion-label>
+                </ion-item-divider>
+                <ion-item>
+                  <ion-label>Yes</ion-label>
+                </ion-item>
+              </ion-item-group>
+
+              <ion-item-group>
+                <ion-item-divider>
+                  <ion-label>Player Recommendation</ion-label>
+                </ion-item-divider>
+                <ion-item>
+                  <ion-label>Name</ion-label>
+                  <ion-badge color="secondary">Gabriel Jesus</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Team</ion-label>
+                  <ion-badge color="secondary">Arsenal</ion-badge>
+                </ion-item>
+              </ion-item-group>
+
+              <ion-item-group>
+                <ion-item-divider>
+                  <ion-label>Player Stats</ion-label>
+                </ion-item-divider>
+                <ion-item>
+                  <ion-label>Position</ion-label>
+                  <ion-badge color="secondary">Forward</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Appearances</ion-label>
+                  <ion-badge color="secondary"> 66</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Goals</ion-label>
+                  <ion-badge color="secondary"> 63</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Goals per match</ion-label>
+                  <ion-badge color="secondary"> 0.95</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Headed goals</ion-label>
+                  <ion-badge color="secondary"> 11</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Goals with right foot</ion-label>
+                  <ion-badge color="secondary"> 8</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Goals with left foot</ion-label>
+                  <ion-badge color="secondary"> 43</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Penalties scored</ion-label>
+                  <ion-badge color="secondary"> 14</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Freekicks scored</ion-label>
+                  <ion-badge color="secondary"> 0</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Shots</ion-label>
+                  <ion-badge color="secondary"> 244</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Shots on target</ion-label>
+                  <ion-badge color="secondary"> 119</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Shooting accuracy %</ion-label>
+                  <ion-badge color="secondary"> 0.49</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Hit woodwork</ion-label>
+                  <ion-badge color="secondary"> 7</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Big chances missed</ion-label>
+                  <ion-badge color="secondary"> 62</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Yellow cards</ion-label>
+                  <ion-badge color="secondary"> 6</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Red cards</ion-label>
+                  <ion-badge color="secondary"> 0</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Fouls</ion-label>
+                  <ion-badge color="secondary"> 49</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Offsides</ion-label>
+                  <ion-badge color="secondary"> 14</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Tackles</ion-label>
+                  <ion-badge color="secondary"> 9</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Blocked shots</ion-label>
+                  <ion-badge color="secondary"> 39</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Interceptions</ion-label>
+                  <ion-badge color="secondary"> 5</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Clearances</ion-label>
+                  <ion-badge color="secondary"> 30</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Headed Clearance</ion-label>
+                  <ion-badge color="secondary"> 24</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Assists</ion-label>
+                  <ion-badge color="secondary"> 5</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Passes</ion-label>
+                  <ion-badge color="secondary"> 381</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Passes per match</ion-label>
+                  <ion-badge color="secondary"> 12.29</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Big Chances Created</ion-label>
+                  <ion-badge color="secondary"> 6</ion-badge>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Crosses</ion-label>
+                  <ion-badge color="secondary"> 5</ion-badge>
+                </ion-item>
+              </ion-item-group>
+            </ion-list>
+
+          </ion-card-content>
+        </ion-card>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 
 </ion-content>
 
 <ion-footer collapse="fade">
   <ion-toolbar>
     <ion-buttons slot="end">
-      <ion-button (click)="serach()" fill="solid" color="secondary">Search</ion-button>
+      <ion-button [disabled]="!selectedLeague || selectedTeamList.length === 0 || selectedPlayerList.length === 0"
+        (click)="serach()" fill="solid" color="secondary">
+        Get Player Summary
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-footer>
