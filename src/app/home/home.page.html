@@ -13,25 +13,51 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-list>
-    <ion-list-header>
-      <ion-label class="league-header-text">Select a League</ion-label>
-    </ion-list-header>
-    <ion-radio-group (ionChange)="handleChange($event)">
-      <ion-item *ngFor="let league of leagueList;" lines="full">
-        <ion-thumbnail slot="start">
-          <img class="league-imag" [alt]="league.name" [src]="league.logoUrl" />
-        </ion-thumbnail>
-        <ion-radio [value]="league">{{ league.name }}</ion-radio>
-      </ion-item>
-    </ion-radio-group>
-  </ion-list>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Select a League</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-radio-group (ionChange)="handleLeagueChange($event)">
+              <ion-item *ngFor="let league of leagueList;">
+                <ion-thumbnail slot="start">
+                  <img class="league-img" [alt]="league.name" [src]="league.logoUrl" />
+                </ion-thumbnail>
+                <ion-radio color="secondary" [value]="league">{{ league.name }}</ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-card-content>
+        </ion-card>
+
+      </ion-col>
+      <ion-col>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Select a Team</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-item *ngFor="let team of teamList;">
+              <ion-thumbnail slot="start">
+                <img class="team-img" [alt]="team.name" [src]="team.logoUrl" />
+              </ion-thumbnail>
+              <ion-checkbox color="secondary" value="team" (click)="onTeamChange(team)" name="team">{{ team.name
+                }}</ion-checkbox>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>
 
 <ion-footer collapse="fade">
   <ion-toolbar>
     <ion-buttons slot="end">
-      <ion-button fill="solid" color="secondary">Next</ion-button>
+      <ion-button (click)="serach()" fill="solid" color="secondary">Search</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-footer>
